@@ -1,0 +1,17 @@
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\bin\Debug\net6.0\VehicleAlcoholSensor.EF.deps.json
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\bin\Debug\net6.0\VehicleAlcoholSensor.EF.dll
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\bin\Debug\net6.0\VehicleAlcoholSensor.EF.pdb
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\bin\Debug\net6.0\VehicleAlcoholSensor.Domain.dll
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\bin\Debug\net6.0\VehicleAlcoholSensor.Domain.pdb
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\obj\Debug\net6.0\VehicleAlcoholSensor.EF.csproj.AssemblyReference.cache
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\obj\Debug\net6.0\VehicleAlcoholSensor.EF.GeneratedMSBuildEditorConfig.editorconfig
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\obj\Debug\net6.0\VehicleAlcoholSensor.EF.AssemblyInfoInputs.cache
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\obj\Debug\net6.0\VehicleAlcoholSensor.EF.AssemblyInfo.cs
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\obj\Debug\net6.0\VehicleAlcoholSensor.EF.csproj.CoreCompileInputs.cache
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\obj\Debug\net6.0\VehicleAlcoholSensor.EF.csproj.CopyComplete
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\obj\Debug\net6.0\VehicleAlcoholSensor.EF.dll
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\obj\Debug\net6.0\refint\VehicleAlcoholSensor.EF.dll
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\obj\Debug\net6.0\VehicleAlcoholSensor.EF.pdb
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\obj\Debug\net6.0\ref\VehicleAlcoholSensor.EF.dll
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\bin\Debug\net6.0\VehicleAlcoholSensor.EF.runtimeconfig.json
+C:\Sycada\local\github\VehicleAlcoholSensor\Db\DbMigration\VehicleAlcoholSensor.EF\obj\Debug\net6.0\VehicleAlcoholSensor.EF.genruntimeconfig.cache
