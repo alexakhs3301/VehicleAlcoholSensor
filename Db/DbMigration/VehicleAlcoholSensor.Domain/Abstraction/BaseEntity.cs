@@ -8,7 +8,7 @@
         /// <summary>
         /// Entity Identity
         /// </summary>
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// Entity Created Timestamp
         /// </summary>

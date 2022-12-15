@@ -9,6 +9,7 @@ namespace VehicleAlcoholSensor.EF.SchemaConfiguration
         public void Configure(EntityTypeBuilder<Metric> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).UseSerialColumn();
             builder.HasOne(x => x.VechicleDriver).WithMany(x => x.Metrics);
         }
     }

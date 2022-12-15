@@ -44,7 +44,7 @@ namespace VehicleAlcoholSensor.EF
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (string.IsNullOrEmpty(ConnectionString))
-                ConnectionString = @"Host=localhost;Username=postgres;Password=dim1309.-;Database=VehicleAlcoholSensor";
+                ConnectionString = @"Host=vehicle-alcohol-sensor.ctbz3xfbtw99.eu-central-1.rds.amazonaws.com;Username=saalcohol;Password=Xd396#AjZQeM;Database=alcoholdb";
 
             optionsBuilder.UseNpgsql(ConnectionString, options =>
             {

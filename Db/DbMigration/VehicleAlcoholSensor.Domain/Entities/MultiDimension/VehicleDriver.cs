@@ -9,9 +9,9 @@ namespace VehicleAlcoholSensor.Domain.Entities.MultiDimension
     /// </summary>
     public sealed class VehicleDriver : BaseEntity
     {
-        public Guid? DriverId { get; set; }
+        public int? DriverId { get; set; }
         public User Driver { get; set; }
-        public Guid? VehicleId { get; set; }
+        public int? VehicleId { get; set; }
         public Vehicle Vehicle { get; set; }
 
         public ICollection<Metric> Metrics { get; set; }

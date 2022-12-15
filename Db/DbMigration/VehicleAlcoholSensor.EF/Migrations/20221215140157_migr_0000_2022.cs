@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -16,7 +18,8 @@ namespace VehicleAlcoholSensor.EF.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Username = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Password = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
                     EMail = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
@@ -34,7 +37,8 @@ namespace VehicleAlcoholSensor.EF.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     LicensePlate = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -50,9 +54,10 @@ namespace VehicleAlcoholSensor.EF.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    DriverId = table.Column<Guid>(type: "uuid", nullable: false),
-                    VehicleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    DriverId = table.Column<int>(type: "integer", nullable: true),
+                    VehicleId = table.Column<int>(type: "integer", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -65,15 +70,13 @@ namespace VehicleAlcoholSensor.EF.Migrations
                         column: x => x.DriverId,
                         principalSchema: "public",
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_VehicleDrivers_Vehicles_VehicleId",
                         column: x => x.VehicleId,
                         principalSchema: "public",
                         principalTable: "Vehicles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -81,8 +84,9 @@ namespace VehicleAlcoholSensor.EF.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    VehicleDriverId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    VehicleDriverId = table.Column<int>(type: "integer", nullable: true),
                     Percentage = table.Column<float>(type: "real", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -96,8 +100,7 @@ namespace VehicleAlcoholSensor.EF.Migrations
                         column: x => x.VehicleDriverId,
                         principalSchema: "public",
                         principalTable: "VehicleDrivers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

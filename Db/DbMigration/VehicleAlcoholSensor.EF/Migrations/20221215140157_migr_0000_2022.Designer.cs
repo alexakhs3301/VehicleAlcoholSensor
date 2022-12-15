@@ -12,7 +12,7 @@ using VehicleAlcoholSensor.EF;
 namespace VehicleAlcoholSensor.EF.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221213095411_migr_0000_2022")]
+    [Migration("20221215140157_migr_0000_2022")]
     partial class migr_0000_2022
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,11 @@ namespace VehicleAlcoholSensor.EF.Migrations
 
             modelBuilder.Entity("VehicleAlcoholSensor.Domain.Entities.Base.Metric", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -43,9 +45,8 @@ namespace VehicleAlcoholSensor.EF.Migrations
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("VehicleDriverId")
-                        .IsRequired()
-                        .HasColumnType("uuid");
+                    b.Property<int?>("VehicleDriverId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -56,9 +57,11 @@ namespace VehicleAlcoholSensor.EF.Migrations
 
             modelBuilder.Entity("VehicleAlcoholSensor.Domain.Entities.Base.Vehicle", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -81,16 +84,17 @@ namespace VehicleAlcoholSensor.EF.Migrations
 
             modelBuilder.Entity("VehicleAlcoholSensor.Domain.Entities.MultiDimension.VehicleDriver", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("DriverId")
-                        .IsRequired()
-                        .HasColumnType("uuid");
+                    b.Property<int?>("DriverId")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
@@ -98,9 +102,8 @@ namespace VehicleAlcoholSensor.EF.Migrations
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("VehicleId")
-                        .IsRequired()
-                        .HasColumnType("uuid");
+                    b.Property<int?>("VehicleId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -113,9 +116,11 @@ namespace VehicleAlcoholSensor.EF.Migrations
 
             modelBuilder.Entity("VehicleAlcoholSensor.Domain.Entities.Security.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -150,9 +155,7 @@ namespace VehicleAlcoholSensor.EF.Migrations
                 {
                     b.HasOne("VehicleAlcoholSensor.Domain.Entities.MultiDimension.VehicleDriver", "VechicleDriver")
                         .WithMany("Metrics")
-                        .HasForeignKey("VehicleDriverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VehicleDriverId");
 
                     b.Navigation("VechicleDriver");
                 });
@@ -161,15 +164,11 @@ namespace VehicleAlcoholSensor.EF.Migrations
                 {
                     b.HasOne("VehicleAlcoholSensor.Domain.Entities.Security.User", "Driver")
                         .WithMany("VehicleDrivers")
-                        .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DriverId");
 
                     b.HasOne("VehicleAlcoholSensor.Domain.Entities.Base.Vehicle", "Vehicle")
                         .WithMany("VehicleDrivers")
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VehicleId");
 
                     b.Navigation("Driver");
 

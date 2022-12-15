@@ -8,7 +8,7 @@ namespace VehicleAlcoholSensor.Domain.Entities.Base
     /// </summary>
     public sealed class Metric : BaseEntity
     {
-        public Guid? VehicleDriverId { get; set; }
+        public int? VehicleDriverId { get; set; }
         public VehicleDriver VechicleDriver { get; set; }
         public float Percentage { get; set; }
     }

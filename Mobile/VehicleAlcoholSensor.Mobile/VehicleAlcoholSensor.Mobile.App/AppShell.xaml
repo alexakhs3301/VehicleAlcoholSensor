@@ -1,14 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="VehicleAlcoholSensor.Mobile.App.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:VehicleAlcoholSensor.Mobile.App"
-    Shell.FlyoutBehavior="Disabled">
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:VehicleAlcoholSensor.Mobile.App.Views"
+       x:Class="VehicleAlcoholSensor.Mobile.App.AppShell">
+    <TabBar>
+        <Tab Title="Connect"
+            Icon="network.svg">
+            <ShellContent ContentTemplate="{DataTemplate views:Connect}" />
+        </Tab>
+        <Tab Title="Report"
+            Icon="report.svg">
+            <ShellContent ContentTemplate="{DataTemplate views:Report}" />
+        </Tab>
+        <Tab Title="Settings"
+             Icon="maintenance.svg">
+            <ShellContent ContentTemplate="{DataTemplate views:Settings}" />
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+        </Tab>
+    </TabBar>
 </Shell>
