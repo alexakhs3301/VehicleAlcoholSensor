@@ -1,4 +1,8 @@
-﻿namespace VehicleAlcoholSensor.Mobile.App
+﻿using Microsoft.Maui.LifecycleEvents;
+using CommunityToolkit.Maui;
+
+
+namespace VehicleAlcoholSensor.Mobile.App
 {
     public static class MauiProgram
     {
@@ -6,6 +10,7 @@
         {
             var builder = MauiApp.CreateBuilder();
             builder
+                .UseMauiCommunityToolkit()
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
                 {

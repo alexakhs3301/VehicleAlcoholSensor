@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              x:Class="VehicleAlcoholSensor.Mobile.App.Views.Connect"
-             Title="Connect">
-    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+             Title="Connectivity"
+             NavigationPage.HasNavigationBar="True"
+             BackgroundColor="White">
+
+    <StackLayout VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White">
         <Frame x:Name="BtnConnect" BackgroundColor="Red"
                VerticalOptions="Center"
                HorizontalOptions="Center"
@@ -14,10 +18,10 @@
                CornerRadius="100"
                >
 
-            <Image x:Name="ImgPower" Source="Power.svg" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="50" HeightRequest="50"/>
+                <Image x:Name="ImgPower" Source="Power.svg" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="50" HeightRequest="50"/>
 
 
-        </Frame>
-        <Label x:Name="LblConnectedDevice" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18"/>
+            </Frame>
+            <Label x:Name="LblConnectedDevice" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18"/>
     </StackLayout>
 </ContentPage>
