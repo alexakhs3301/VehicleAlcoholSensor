@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
+	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
 	"net/http"
 	"strconv"
@@ -59,8 +60,8 @@ func main() {
 		panic(err)
 	}
 
-	http.HandleFunc("/sensordata", handlePOSTSensorData)
-	http.HandleFunc("/sensordata", handleGETSensorData)
+	http.HandleFunc("/sensordatapost", handlePOSTSensorData)
+	http.HandleFunc("/sensordataget", handleGETSensorData)
 	http.ListenAndServe(":8080", nil)
 }
 
