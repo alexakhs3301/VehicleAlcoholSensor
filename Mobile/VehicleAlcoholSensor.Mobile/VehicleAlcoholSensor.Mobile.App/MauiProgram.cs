@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.LifecycleEvents;
 using CommunityToolkit.Maui;
-
+using VehicleAlcoholSensor.Mobile.App.ServicesExtensions;
+using VehicleAlcoholSensor.Mobile.App.Views;
 
 namespace VehicleAlcoholSensor.Mobile.App
 {
@@ -9,6 +10,7 @@ namespace VehicleAlcoholSensor.Mobile.App
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
             builder
                 .UseMauiCommunityToolkit()
                 .UseMauiApp<App>()
@@ -17,6 +19,9 @@ namespace VehicleAlcoholSensor.Mobile.App
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+            builder.Services.AddHttpClients();
+            builder.Services.AddCommands();
+            builder.Services.AddSingleton<Report>();
 
             return builder.Build();
         }
