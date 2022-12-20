@@ -4,17 +4,17 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
-	_ "github.com/lib/pq"
-	"github.com/spf13/viper"
 	"log"
 	"net/http"
 	"strconv"
-	"time"
+
+	_ "github.com/lib/pq"
+	"github.com/spf13/viper"
 )
 
-type Metric struct {
-	percentage      float64   `json:"percentage"`
-	event_timestamp time.Time `json:"event_Timestamp"`
+type metric struct {
+	Percentage     float64 `json:"percentage"`
+	EventTimestamp string  `json:"event_timestamp"`
 }
 
 type HR struct {
@@ -88,10 +88,10 @@ func handleGETSensorData(w http.ResponseWriter, r *http.Request) {
 	}
 	defer rows.Close()
 
-	metrics := []Metric{}
+	var metrics []metric
 	for rows.Next() {
-		var m Metric
-		if err = rows.Scan(&m.percentage, &m.event_timestamp); err != nil {
+		var m metric
+		if err = rows.Scan(&m.Percentage, &m.EventTimestamp); err != nil {
 			http.Error(w, "Error scanning metric rows", http.StatusInternalServerError)
 			return
 		}
@@ -102,12 +102,13 @@ func handleGETSensorData(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error fetching metric rows", http.StatusInternalServerError)
 		return
 	}
-	jsonmetrics, err := json.Marshal(metrics)
+
 	w.Header().Set("Content-Type", "application/json")
-	//err = json.NewEncoder(w).Encode(jsonmetrics)
-	w.Write(jsonmetrics)
+	err = json.NewEncoder(w).Encode(metrics)
+
 	if err != nil {
-		log.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 
