@@ -28,7 +28,7 @@ var pgDB *sql.DB
 func main() {
 
 	/*reading from json config file using viper package*/
-	viper.AddConfigPath("./")
+	viper.AddConfigPath("./Api")
 	viper.SetConfigName("dbConfig")
 	viper.SetConfigType("json")
 	err := viper.ReadInConfig()
