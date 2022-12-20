@@ -33,10 +33,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#9AC962" />
+		<MauiIcon Include="Resources\Images\sycada_logo.png" ForegroundFile="Resources\Images\sycada_logo.png" Color="#9AC962" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#9AC962" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Images\sycada_logo.png" Color="#9AC962" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
