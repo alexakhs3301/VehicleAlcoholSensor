@@ -10,21 +10,17 @@ public partial class Report : ContentPage
 	{
 		InitializeComponent();
         _getReports = getReports;
-
-        InitializeList();
+        this.Appearing += Report_Appearing;
     }
 
-    private void InitializeList()
+    private async void Report_Appearing(object sender, EventArgs e)
     {
-        var list = _getReports.HandleAsync(new Application.Commands.Report.Command
+        var list = await _getReports.HandleAsync(new Application.Commands.Report.Command
         {
             DriverId = 1,
             VehicleId = 1,
-        }).Result;
+        });
 
-        foreach(var entity in list)
-        {
-            Console.WriteLine(entity.ToString());
-        }
+        this.ReportListView.ItemsSource = list;
     }
 }

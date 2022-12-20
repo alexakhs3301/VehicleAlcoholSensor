@@ -12,6 +12,7 @@ namespace VehicleAlcoholSensor.Mobile.App.ServicesExtensions
         public static IServiceCollection AddCommands(this IServiceCollection services)
         {
             services.AddSingleton<Application.Commands.Report.Handler>();
+            services.AddSingleton<Application.Commands.Metric.Handler>();
 
             return services;
         }

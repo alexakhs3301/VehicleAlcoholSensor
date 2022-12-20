@@ -21,7 +21,7 @@ namespace VehicleAlcoholSensor.Mobile.App
                 });
             builder.Services.AddHttpClients();
             builder.Services.AddCommands();
-            builder.Services.AddSingleton<Report>();
+            builder.Services.AddViewConstrunction();
 
             return builder.Build();
         }
