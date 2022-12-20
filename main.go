@@ -6,34 +6,21 @@ import (
 	"errors"
 	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
 )
 
 type Metric struct {
-	ID              int
-	VehicleDriverId int
-	Percentage      float64
-	CreatedOn       time.Time
-	UpdatedOn       time.Time
-	IsDeleted       bool
+	percentage      float64   `json:"percentage"`
+	event_timestamp time.Time `json:"event_Timestamp"`
 }
 
-type Vehicle struct {
-	ID           int
-	LicensePlate string
-	CreatedOn    time.Time
-	UpdatedOn    time.Time
-	IsDeleted    bool
-}
-type VehicleDriver struct {
-	ID        int
-	driverID  int
-	vehicleID int
-	CreatedOn time.Time
-	UpdatedOn time.Time
-	IsDeleted bool
+type HR struct {
+	DriverID   int
+	VehicleID  int
+	Percentage float64
 }
 
 var pgDB *sql.DB
@@ -51,7 +38,7 @@ func main() {
 
 	pgDsn := viper.GetString("postgresData.dataSourceName")
 
-	pgDB, err := sql.Open("postgres", pgDsn)
+	pgDB, err = sql.Open("postgres", pgDsn)
 	if err != nil {
 		panic(err)
 	}
@@ -95,6 +82,7 @@ func handleGETSensorData(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := pgDB.Query("SELECT * FROM metric_getall_by_driverid_and_vehicle_id($1,$2)", driverID, vehicleID)
 	if err != nil {
+		log.Println(err)
 		http.Error(w, "Error fetching metrics from database", http.StatusInternalServerError)
 		return
 	}
@@ -103,7 +91,7 @@ func handleGETSensorData(w http.ResponseWriter, r *http.Request) {
 	metrics := []Metric{}
 	for rows.Next() {
 		var m Metric
-		if err := rows.Scan(&m.ID, &m.VehicleDriverId, &m.Percentage, &m.CreatedOn, &m.UpdatedOn, &m.IsDeleted); err != nil {
+		if err = rows.Scan(&m.percentage, &m.event_timestamp); err != nil {
 			http.Error(w, "Error scanning metric rows", http.StatusInternalServerError)
 			return
 		}
@@ -114,9 +102,13 @@ func handleGETSensorData(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error fetching metric rows", http.StatusInternalServerError)
 		return
 	}
-
+	jsonmetrics, err := json.Marshal(metrics)
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(metrics)
+	//err = json.NewEncoder(w).Encode(jsonmetrics)
+	w.Write(jsonmetrics)
+	if err != nil {
+		log.Println(err)
+	}
 }
 
 func handlePOSTSensorData(w http.ResponseWriter, r *http.Request) {
@@ -125,17 +117,13 @@ func handlePOSTSensorData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var m Metric
-	if err := json.NewDecoder(r.Body).Decode(&m); err != nil {
+	var h HR
+	if err := json.NewDecoder(r.Body).Decode(&h); err != nil {
 		http.Error(w, "Error decoding metric JSON", http.StatusBadRequest)
 		return
 	}
 
-	now := time.Now()
-	m.CreatedOn = now
-	m.UpdatedOn = now
-
-	_, err := pgDB.Exec("SELECT * FROM metric_insert($1, $2, $3)", m.VehicleDriverId, m.ID, m.Percentage)
+	_, err := pgDB.Exec("SELECT * FROM metric_insert($1, $2, $3)", &h.DriverID, &h.VehicleID, &h.Percentage)
 	if err != nil {
 		http.Error(w, "Error inserting metric into database", http.StatusInternalServerError)
 		return
