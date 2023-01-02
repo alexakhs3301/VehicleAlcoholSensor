@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VehicleAlcoholSensor.Application.Abstraction
 {
-    public interface IHandler<TResult> where TResult : class
+    public interface IHandler<TResult>
     {
         public Task<TResult> HandleAsync(ICommand entity);
     }

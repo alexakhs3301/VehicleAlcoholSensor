@@ -24,19 +24,22 @@ namespace VehicleAlcoholSensor.Application.Commands.Report
         {
             if(entity == null)
             {
-                return default;
+                return Enumerable.Empty<ReportModel>();
             }
 
-            var command = entity as Command;
+            if (entity is not Command command)
+            {
+                return Enumerable.Empty<ReportModel>();
+            }
 
             var client = _httpClientFactory.CreateClient("AlcoholSensor");
-            var responseMessage = client.GetAsync($"/sensordataget?driverID={command.DriverId}&vehicleID={command.VehicleId}").Result;
+            var responseMessage = await client.GetAsync($"/sensordataget?driverID={command.DriverId}&vehicleID={command.VehicleId}");
 
-            var jsonContent = responseMessage.Content.ReadAsStringAsync().Result;
+            var jsonContent = await responseMessage.Content.ReadAsStringAsync();
 
             var mRet = JsonConvert.DeserializeObject<IEnumerable<ReportModel>>(jsonContent);
 
-            return mRet;
+            return mRet??Enumerable.Empty<ReportModel>();
         }
     }
 }
