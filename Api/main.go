@@ -47,9 +47,12 @@ func main() {
 		panic(err)
 	}
 
-	http.HandleFunc("/sensordatapost", handlePOSTSensorData)
 	http.HandleFunc("/sensordataget", handleGETSensorData)
-	http.ListenAndServe(":8080", nil)
+	http.HandleFunc("/sensordatapost", handlePOSTSensorData)
+	err = http.ListenAndServe(":8080", nil)
+	if err != nil {
+		return
+	}
 }
 
 func handleGETSensorData(w http.ResponseWriter, r *http.Request) {
