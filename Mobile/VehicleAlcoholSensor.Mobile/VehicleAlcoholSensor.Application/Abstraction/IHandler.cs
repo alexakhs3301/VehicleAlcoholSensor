@@ -8,6 +8,6 @@ namespace VehicleAlcoholSensor.Application.Abstraction
 {
     public interface IHandler<TResult>
     {
-        public Task<TResult> HandleAsync(ICommand entity);
+        public Task<TResult> ExecuteAsync(ICommand entity);
     }
 }

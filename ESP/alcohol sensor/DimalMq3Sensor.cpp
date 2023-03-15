@@ -1,5 +1,7 @@
 #include "DimalMq3Sensor.h"
 
+AlcoholSensor::AlcoholSensor(){}
+
 AlcoholSensor::AlcoholSensor(int analog_pin, int digital_pin) {
   this->analog_pin = analog_pin;
   this->digital_pin = digital_pin;
@@ -19,9 +21,9 @@ void AlcoholSensor::stop(){
   this->is_started = false;
 }
 
-float AlcoholSensor::receiveAnalogData() {
-  float sensorValue = analogRead(analog_pin);
-
+int AlcoholSensor::receiveAnalogData() {
+  int sensorValue = analogRead(analog_pin);
+  readAlcohol();
   return sensorValue;
 }
 
