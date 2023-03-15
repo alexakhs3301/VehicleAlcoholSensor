@@ -4,11 +4,12 @@
 #endif
 class AlcoholSensor {
   public:
+    AlcoholSensor();
     AlcoholSensor(int analog_pin, int digital_pin);
 
     void start();
     void stop();
-    float receiveAnalogData();
+    int receiveAnalogData();
     bool receiveDigitalData();
 
   private:

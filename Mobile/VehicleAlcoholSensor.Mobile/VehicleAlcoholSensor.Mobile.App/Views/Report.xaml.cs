@@ -15,7 +15,7 @@ public partial class Report : ContentPage
 
     private async void Report_Appearing(object sender, EventArgs e)
     {
-        var list = await _getReports.HandleAsync(new Application.Commands.Report.Command
+        var list = await _getReports.ExecuteAsync(new Application.Commands.Report.Command
         {
             DriverId = 1,
             VehicleId = 1,

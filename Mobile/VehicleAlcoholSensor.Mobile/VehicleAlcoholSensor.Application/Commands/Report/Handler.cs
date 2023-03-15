@@ -20,7 +20,7 @@ namespace VehicleAlcoholSensor.Application.Commands.Report
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<IEnumerable<ReportModel>> HandleAsync(ICommand entity)
+        public async Task<IEnumerable<ReportModel>> ExecuteAsync(ICommand entity)
         {
             if(entity == null)
             {

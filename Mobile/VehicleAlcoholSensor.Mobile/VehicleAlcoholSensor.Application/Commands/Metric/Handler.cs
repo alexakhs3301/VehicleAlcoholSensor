@@ -17,7 +17,7 @@ namespace VehicleAlcoholSensor.Application.Commands.Metric
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<bool> HandleAsync(ICommand entity)
+        public async Task<bool> ExecuteAsync(ICommand entity)
         {
             if(entity == null)
             {
