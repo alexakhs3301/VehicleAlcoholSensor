@@ -14,6 +14,6 @@ class AlcoholSensor {
 
   private:
     int analog_pin = A0;
-    int digital_pin = D4;
+    int digital_pin = PD4;
     bool is_started = false;
 };

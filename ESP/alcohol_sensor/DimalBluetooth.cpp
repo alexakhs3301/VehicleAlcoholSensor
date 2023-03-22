@@ -22,6 +22,7 @@ void Bluetooth::start() {
 
   Serial.begin(baud_rate);
   bluetooth_module->begin(baud_rate);
+  bluetooth_module->setTimeout(1000);
 }
 
 void Bluetooth::send(const char* data){
@@ -34,6 +35,16 @@ void Bluetooth::send(float data){
   bluetooth_module->println(data);
 }
 
+void Bluetooth::send(String data) {
+  Serial.println(data);
+  bluetooth_module->print(data);
+}
+
 String Bluetooth::receive() {
-  return bluetooth_module->readString();
+  String receivedData = "";
+  while (bluetooth_module->available()) {
+    char c = bluetooth_module->read();
+    receivedData += c;
+  }
+  return receivedData;
 }

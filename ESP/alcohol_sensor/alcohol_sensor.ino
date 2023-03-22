@@ -1,16 +1,15 @@
-#define ALCOHOL_LIMIT 0.25
+#define SERIAL_NUMBER "ALC_00001"
 #include "DimalCurve.h"
 #include "DimalMq3Sensor.h"
-#include "DimalQueue.h"
+// #include "DimalList.cpp"
+#include "DimalQueue.cpp"
 #include "DimalBluetooth.h"
 #include <LiquidCrystal_I2C.h>
-
 #include "DimalLcd.h"
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 // Create LCD Object.
 Lcd lcd(0x3F, 20, 4);
@@ -21,14 +20,35 @@ Bluetooth bluetooth;
 // Create Mq3 Object.
 AlcoholSensor alcohol_sensor;
 
+// Button Switch
+const int switchPin = PD3;
+const int greenLedPin = PD5;
+const int redLedPin = PD6;
+const int btStatePin = PD7;
+
+float sensorValue = 0.0f;
+float sensorVolt = 0.0f;
+
+List<int> sensorValues;
+
+Queue<int> calculations;
+
+int limit = 200;
+
 void setup() 
 {
   // Initialise the Standard Output
   Serial.begin(9600);
 
+  pinMode(switchPin, INPUT_PULLUP);
+  pinMode(greenLedPin, OUTPUT);
+  pinMode(redLedPin, OUTPUT);
+  pinMode(btStatePin, INPUT);
+
   // Starts the LCD Module
   lcd.start();
-
+  digitalWrite(greenLedPin, HIGH);
+  digitalWrite(redLedPin, HIGH);
   // Starts the Bluetooth Module
   lcd.print("Starting Bluetooth", 1, 0);
   bluetooth.start();
@@ -41,82 +61,121 @@ void setup()
   // Starts the Mq3
   lcd.print("Mq3 Warming Up", 2, 0);
   alcohol_sensor.start();
-  delay(5000);
+  for(int timer = 0; timer < 20; timer++){
+    lcd.print("*", timer, 1);
+    limit += alcohol_sensor.receiveAnalogData();
+    delay(1000);
+  }
+
+  limit /= 20; // get the average
+  limit = limit + 100;
+  limit += (limit * 0.05);
+
+  Serial.println(limit);
   lcd.clear();
-  lcd.print("Initialise", 9, 0);
+  lcd.print("Initialise", 5, 0);
   delay(3000);
-  lcd.print("Completed", 10, 0);
+  lcd.print("Completed", 2, 0);
   lcd.clear();
+  lcd.backlight(false);
 }
 
 void loop() {
 
+  //Serial.println(alcohol_sensor.receiveAnalogData());
   /*
-  * 
+  * If bluetooth is connected then bluetooth module starts send the values from Queue
+  * and continues until the state become LOW again.
   */
+  if(digitalRead(btStatePin) == HIGH) {
+    
+    if(!calculations.IsEmpty()) {
+      int value_from_queue = calculations.Peek();
+      calculations.Dequeue();
+      
+      String r = SERIAL_NUMBER + String("|");
+      r = r + String(value_from_queue) + String(",");
 
-
-  lcd.clear();
+      bluetooth.send(r);
+    }
+  }
+  
   /*
   * Using Button in order to get values from Alcohol Sensor it means you reiceive rapidly data.
   * These data you need to be calculated before send it to mobile.
-  * For this reason we save all values into a list and after that we search for the highest value. This value is the correct value.
-  * If this value is greater than limit, the led should not lights otherwise the led should lights.
+  * For this reason we save all values into a list and after that we will search for the highest value. This value is the correct value.
+  * The highest value is added to queue in order to send it via Bluetooth when Bluetooth Connection is available.
+  * If this value is greater than limit the Red Led must lights up else Green Led lights up.
   */
 
-  bool btn_ispressed = true;
-
-  while(btn_ispressed)
+  bool buttonIsPressed = (digitalRead(switchPin) == LOW ? true : false);
+  
+  if(buttonIsPressed)
   {
-    // Read the value from Sensor.
-    int adcValue = alcohol_sensor.receiveAnalogData();
-    // We must convert the analog signal to PPM.
-    long ppm = map(adcValue, 0, 1023, 0, 500);
-    //Save this value to list.
+    sensorValues.clear();
+    int counter = 0;
+    lcd.backlight(buttonIsPressed);
+    lcd.clear();
+    
+    lcd.print("Please Breath...", 2, 0);
+    
+    do {
+      //Read the value from Sensor.
+      int bits = alcohol_sensor.receiveAnalogData();
+      
+      // lcd.print("Bits: ", 0, 0);
+      // lcd.print(bits, 8, 0);
+      sensorVolt = (bits * 5.0f) / 1023.0f;
+      // lcd.print("Volt: ", 0, 1);
+      // lcd.print(sensorVolt, 8, 1);
 
-    // Check if button is not currently pressed
+      float result = map(sensorVolt, 0.0f, 5.0f, 25.0f, 500.0f);
+      // lcd.print("Map: ", 0, 2);
+      // lcd.print(result, 7, 2);
+
+      // Add to list
+      sensorValues.add(bits);
+
+      counter++;
+
+      lcd.print(counter, 5, 1);
+      lcd.print(" sec", 7, 1);
+
+      delay(1000);
+    } while(counter < 10);
   }
-
-
-  // Getting the Maximun Value in List
-  float mgpb = 2.5;
-
-  // Check if the value is in limit.
-  if(mgpd >= ALCOHOL_LIMIT) {
-    // Should not light up the led.
-  }
-  else {
-    // Should light up the led.
-  }
-
-
-  // float result = Mq3SensorData();
-  // enqueue(&_queue, &result);
-  // Serial.println(result);
-  //send(&d);
-  // lcd.setCursor(0, 0); 
-  // lcd.print("Alcohol Percent:");
-
-  // lcd.print("Alcohol Percent:", 2, 0);
-
-  // srand((unsigned int) time(NULL));
   
-  // while(true){
-  //   float d = ((float) rand() / (float)(RAND_MAX));
-  //   lcd.print(d, 4, 1);
-  //   lcd.print("mg/L", 10, 1);
-  //   bluetooth.send(d);
-  //   delay(3000);
-  // }
+  if (buttonIsPressed)
+  {
 
-  // float voltage =  (adcValue * 3.3) / 1023.0;
-  //float voltage = (adcValue / 10) * (5.0 / 1023.0);
+    int max_value = sensorValues.max_value(); // Getting the Max Value.
+    calculations.Enqueue(max_value); // Enqueue the Max Value.
 
-  
+    lcd.clear();
+    lcd.print("OK Thank you!!!", 2, 0);
+    delay(2000);
+    lcd.clear();
+    lcd.print("Based on Calc.", 3, 0);
+    lcd.print("You are: ", 3, 1);
 
+    if(max_value <= limit) {
+      lcd.print("Sober", 11, 1);
+      lcd.print("Driving", 5, 2);
+      lcd.print("is allowed", 3, 3);
+      digitalWrite(greenLedPin, LOW);
+    }
+    else {
+      digitalWrite(redLedPin, LOW);
+      lcd.print("Drunk", 11, 1);
+      lcd.print("Driving", 5, 2);
+      lcd.print("is prohibited",3, 3);
+    }
+    delay(5000);
+  }
 
-  bluetooth.send(ppm);
-  lcd.print(ppm, 0, 0);
-  delay(1000);
+  buttonIsPressed = false;
+  lcd.backlight(buttonIsPressed);
+  sensorValues.clear();
 
+  lcd.clear();
 }
