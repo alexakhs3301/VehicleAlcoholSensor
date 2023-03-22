@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,8 @@ namespace VehicleAlcoholSensor.Domain.Entities
 {
     public class Report
     {
-        public float Percentage { get; set; }
+        public int Concentration { get; set; }
+        [JsonProperty("event_timestamp")]
         public DateTime EventTimestamp { get; set; }
     }
 }

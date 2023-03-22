@@ -26,14 +26,16 @@ namespace VehicleAlcoholSensor.EF
         public DbSet<User> Users { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Metric> Metrics { get; set; }
-        public DbSet<VehicleDriver> VehicleDrivers { get; set; }
+        public DbSet<VehicleDriverDevice> VehicleDriverDevices { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new DeviceConfig());
             modelBuilder.ApplyConfiguration(new UserConfig());
             modelBuilder.ApplyConfiguration(new VehicleConfig());
             modelBuilder.ApplyConfiguration(new MetricConfig());
+            modelBuilder.ApplyConfiguration(new VehicleDriverConfig());
 
             // PostgreSQL
             modelBuilder.HasDefaultSchema("public");
@@ -44,7 +46,7 @@ namespace VehicleAlcoholSensor.EF
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (string.IsNullOrEmpty(ConnectionString))
-                ConnectionString = @"Host=vehicle-alcohol-sensor.ctbz3xfbtw99.eu-central-1.rds.amazonaws.com;Username=saalcohol;Password=Xd396#AjZQeM;Database=alcoholdb";
+                ConnectionString = @"Host=localhost;Username=postgres;Password=dim1309.-;Database=alcoholdb";
 
             optionsBuilder.UseNpgsql(ConnectionString, options =>
             {

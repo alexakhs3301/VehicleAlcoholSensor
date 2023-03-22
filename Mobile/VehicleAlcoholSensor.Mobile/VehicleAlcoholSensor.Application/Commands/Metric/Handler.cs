@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,14 +30,26 @@ namespace VehicleAlcoholSensor.Application.Commands.Metric
                 return false;
             }
 
-            var client = _httpClientFactory.CreateClient("AlcoholSensor");
-            var responseMessage = await client.PostAsync("/sensordatapost", new StringContent(JsonConvert.SerializeObject(command), Encoding.UTF8, "application/json"));
+            try
+            {
+                var client = _httpClientFactory.CreateClient("AlcoholSensor");
+                var responseMessage = await client.PostAsync("/sensordatapost", new StringContent(JsonConvert.SerializeObject(command), Encoding.UTF8, "application/json"));
+                if(responseMessage.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
 
-            var jsonContent = await responseMessage.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return false;
+            }
 
-            var result = JsonConvert.DeserializeObject<bool>(jsonContent);
-
-            return result;
         }
     }
 }

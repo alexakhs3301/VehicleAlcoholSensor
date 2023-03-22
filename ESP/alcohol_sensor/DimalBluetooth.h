@@ -8,6 +8,7 @@ class Bluetooth {
     void start();
     void send(const char* data);
     void send(float data);
+    void send(String data);
     String receive(); 
 
   private:

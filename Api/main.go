@@ -13,14 +13,16 @@ import (
 )
 
 type metric struct {
-	Percentage     float64 `json:"percentage"`
-	EventTimestamp string  `json:"event_timestamp"`
+	Concentration  int    `json:"concentration"`
+	EventTimestamp string `json:"event_timestamp"`
 }
 
 type HR struct {
-	DriverID   int
-	VehicleID  int
-	Percentage float64
+	DriverID      int
+	DeviceID      int
+	VehicleID     int
+	Concentration int
+	Timestamp     string
 }
 
 var pgDB *sql.DB
@@ -62,11 +64,13 @@ func handleGETSensorData(w http.ResponseWriter, r *http.Request) {
 	}
 
 	queryParams := r.URL.Query()
-	driverIDstr := queryParams.Get("driverID")
-	vehicleIDstr := queryParams.Get("vehicleID")
+	driverIDstr := queryParams.Get("driverId")
+	vehicleIDstr := queryParams.Get("vehicleId")
+	deviceIDstr := queryParams.Get("deviceId")
 
 	var driverID int
 	var vehicleID int
+	var deviceID int
 	var err error
 
 	driverID, err = strconv.Atoi(driverIDstr)
@@ -83,7 +87,14 @@ func handleGETSensorData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rows, err := pgDB.Query("SELECT * FROM metric_getall_by_driverid_and_vehicle_id($1,$2)", driverID, vehicleID)
+	deviceID, err = strconv.Atoi(deviceIDstr)
+	if err != nil {
+		http.Error(w, "Error parsing deviceID",
+			http.StatusBadRequest)
+		return
+	}
+
+	rows, err := pgDB.Query("SELECT * FROM get_all_alcohol_concentration($1,$2,$3)", driverID, deviceID, vehicleID)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Error fetching metrics from database", http.StatusInternalServerError)
@@ -94,7 +105,7 @@ func handleGETSensorData(w http.ResponseWriter, r *http.Request) {
 	var metrics []metric
 	for rows.Next() {
 		var m metric
-		if err = rows.Scan(&m.Percentage, &m.EventTimestamp); err != nil {
+		if err = rows.Scan(&m.Concentration, &m.EventTimestamp); err != nil {
 			http.Error(w, "Error scanning metric rows", http.StatusInternalServerError)
 			return
 		}
@@ -127,7 +138,7 @@ func handlePOSTSensorData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err := pgDB.Exec("SELECT * FROM metric_insert($1, $2, $3)", &h.DriverID, &h.VehicleID, &h.Percentage)
+	_, err := pgDB.Exec("SELECT * FROM insert_alcohol_concentration($1, $2, $3, $4, $5)", &h.DriverID, &h.DeviceID, &h.VehicleID, &h.Concentration, &h.Timestamp)
 	if err != nil {
 		http.Error(w, "Error inserting metric into database", http.StatusInternalServerError)
 		return

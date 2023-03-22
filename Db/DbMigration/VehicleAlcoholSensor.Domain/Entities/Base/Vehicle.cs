@@ -10,6 +10,6 @@ namespace VehicleAlcoholSensor.Domain.Entities.Base
     {
         public string LicensePlate { get; set; }
 
-        public ICollection<VehicleDriver> VehicleDrivers { get; set; }
+        public ICollection<VehicleDriverDevice> VehicleDriverDevices { get; set; }
     }
 }

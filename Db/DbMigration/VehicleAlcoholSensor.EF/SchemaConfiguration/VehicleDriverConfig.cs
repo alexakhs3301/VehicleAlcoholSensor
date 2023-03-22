@@ -10,9 +10,9 @@ using VehicleAlcoholSensor.Domain.Entities.MultiDimension;
 
 namespace VehicleAlcoholSensor.EF.SchemaConfiguration
 {
-    public class VehicleDriverConfig : IEntityTypeConfiguration<VehicleDriver>
+    public class VehicleDriverConfig : IEntityTypeConfiguration<VehicleDriverDevice>
     {
-        public void Configure(EntityTypeBuilder<VehicleDriver> builder)
+        public void Configure(EntityTypeBuilder<VehicleDriverDevice> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseSerialColumn();

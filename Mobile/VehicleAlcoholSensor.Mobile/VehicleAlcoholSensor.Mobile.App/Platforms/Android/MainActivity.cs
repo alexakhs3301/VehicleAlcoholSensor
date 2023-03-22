@@ -2,6 +2,8 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
+using VehicleAlcoholSensor.Mobile.App.Infrastructure.Bluetooth;
+using VehicleAlcoholSensor.Mobile.App.Platforms.Android.Bluetooth;
 
 namespace VehicleAlcoholSensor.Mobile.App
 {
@@ -16,6 +18,7 @@ namespace VehicleAlcoholSensor.Mobile.App
             this.Window.AddFlags(WindowManagerFlags.Fullscreen);
             this.Window.ClearFlags(WindowManagerFlags.TranslucentStatus);
             this.Window.SetStatusBarColor(Android.Graphics.Color.Transparent);
-        }
+			DependencyService.RegisterSingleton<IBluetoothConnectionManager>(new BluetoothConnectionManager());
+		}
     }
 }

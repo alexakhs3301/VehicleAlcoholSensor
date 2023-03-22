@@ -1,6 +1,6 @@
 {
   "postgresData": {
-    "dataSourceName": "host=vehicle-alcohol-sensor.ctbz3xfbtw99.eu-central-1.rds.amazonaws.com port=5432 user=saalcohol password=Xd396#AjZQeM dbname=alcoholdb sslmode=disable",
+    "dataSourceName": "host=localhost port=5432 user=postgres password=dim1309.- dbname=alcoholdb sslmode=disable",
     "maxConnections": 70,
     "maxIdleConnections": 20
   }

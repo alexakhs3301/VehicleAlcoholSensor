@@ -23,7 +23,6 @@ void AlcoholSensor::stop(){
 
 int AlcoholSensor::receiveAnalogData() {
   int sensorValue = analogRead(analog_pin);
-  readAlcohol();
   return sensorValue;
 }
 

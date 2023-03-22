@@ -8,8 +8,8 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell
-                            Text="{Binding Percentage}"
-                            Detail="{Binding EventTimestamp}"
+                            Text="{Binding Concentration, StringFormat='Concentration: {0}'}"
+                            Detail="{Binding EventTimestamp, StringFormat='Date: {0}'}"
                             />
                     </DataTemplate>
                 </ListView.ItemTemplate>
