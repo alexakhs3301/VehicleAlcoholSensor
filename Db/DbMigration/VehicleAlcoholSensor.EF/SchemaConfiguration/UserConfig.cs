@@ -14,7 +14,10 @@ namespace VehicleAlcoholSensor.EF.SchemaConfiguration
             builder.Property(x => x.Password).HasMaxLength(300).IsRequired();
             builder.Property(x => x.EMail).HasMaxLength(100).IsRequired();
 
-            builder.HasMany(x => x.VehicleDrivers).WithOne(x => x.Driver);
+            builder.HasMany(x => x.VehicleDriverDevices).WithOne(x => x.Driver);
+
+            builder.HasIndex(x => x.Username).IsUnique(true);
+            builder.HasIndex(x=>x.EMail).IsUnique(true);
         }
     }
 }

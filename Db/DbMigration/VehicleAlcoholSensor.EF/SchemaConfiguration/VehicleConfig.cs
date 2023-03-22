@@ -11,7 +11,9 @@ namespace VehicleAlcoholSensor.EF.SchemaConfiguration
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseSerialColumn();
             builder.Property(x => x.LicensePlate).HasMaxLength(50).IsRequired();
-            builder.HasMany(x => x.VehicleDrivers).WithOne(x => x.Vehicle);
+            builder.HasMany(x => x.VehicleDriverDevices).WithOne(x => x.Vehicle);
+
+            builder.HasIndex(x => x.LicensePlate).IsUnique(true);
         }
     }
 }

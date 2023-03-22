@@ -12,6 +12,6 @@ namespace VehicleAlcoholSensor.Domain.Entities.Security
         public string Password { get; set; }
         public string EMail { get; set; }
 
-        public ICollection<VehicleDriver> VehicleDrivers { get; set; }
-    }
+		public ICollection<VehicleDriverDevice> VehicleDriverDevices { get; set; }
+	}
 }
