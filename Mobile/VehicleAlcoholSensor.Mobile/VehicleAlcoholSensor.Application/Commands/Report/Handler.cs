@@ -33,7 +33,7 @@ namespace VehicleAlcoholSensor.Application.Commands.Report
             }
 
             var client = _httpClientFactory.CreateClient("AlcoholSensor");
-            var responseMessage = await client.GetAsync($"/sensordataget?driverID={command.DriverId}&vehicleID={command.VehicleId}");
+            var responseMessage = await client.GetAsync($"/sensordataget?driverId={command.DriverId}&deviceId={command.DeviceId}&vehicleId={command.VehicleId}");
 
             var jsonContent = await responseMessage.Content.ReadAsStringAsync();
 

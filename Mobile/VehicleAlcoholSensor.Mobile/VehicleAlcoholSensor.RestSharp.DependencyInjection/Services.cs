@@ -25,11 +25,9 @@ namespace VehicleAlcoholSensor.RestSharp.DependencyInjection
 				action?.Invoke(restSharpClient);
 
 				Internals.RestSharpSingleton._restSharpClients.Add(name, restSharpClient);
-				
-				return 
-			})
 
-
+				return restSharpClient;
+			});
 
 			return source;
 		}

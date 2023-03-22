@@ -19,6 +19,7 @@ namespace VehicleAlcoholSensor.Mobile.App
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+            builder.Services.AddDefaultContextForDebugOnly();
             builder.Services.AddHttpClients();
             builder.Services.AddCommands();
             builder.Services.AddViewConstrunction();
