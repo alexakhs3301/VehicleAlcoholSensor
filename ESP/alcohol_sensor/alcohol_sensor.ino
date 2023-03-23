@@ -1,4 +1,5 @@
 #define SERIAL_NUMBER "ALC_00001"
+#define DRIVING_LIMIT 0.25
 #include "DimalCurve.h"
 #include "DimalMq3Sensor.h"
 // #include "DimalList.cpp"
@@ -20,11 +21,11 @@ Bluetooth bluetooth;
 // Create Mq3 Object.
 AlcoholSensor alcohol_sensor;
 
-// Button Switch
-const int switchPin = PD3;
-const int greenLedPin = PD5;
-const int redLedPin = PD6;
-const int btStatePin = PD7;
+const int switchPin = PD3; // Button
+const int greenLedPin = PD5; // Allowed Led
+const int redLedPin = PD6; // Prohibited Led
+const int btStatePin = PD7; // Bluetooth State
+const float ppmToMgL = 0.9988590004f;
 
 float sensorValue = 0.0f;
 float sensorVolt = 0.0f;
@@ -151,6 +152,8 @@ void loop() {
     int max_value = sensorValues.max_value(); // Getting the Max Value.
     calculations.Enqueue(max_value); // Enqueue the Max Value.
 
+    float mgLValue = ((float)max_value * ppmToMgL) / 1000.0f;
+    mgLValue -= 0.15f;
     lcd.clear();
     lcd.print("OK Thank you!!!", 2, 0);
     delay(2000);
@@ -158,15 +161,19 @@ void loop() {
     lcd.print("Based on Calc.", 3, 0);
     lcd.print("You are: ", 3, 1);
 
-    if(max_value <= limit) {
-      lcd.print("Sober", 11, 1);
+    if(mgLValue <= DRIVING_LIMIT) {
+      lcd.print("Sober", 2, 1);
+      lcd.print(String(mgLValue) + "mg/L", 9, 1);
       lcd.print("Driving", 5, 2);
       lcd.print("is allowed", 3, 3);
+      digitalWrite(redLedPin, HIGH);
       digitalWrite(greenLedPin, LOW);
     }
     else {
       digitalWrite(redLedPin, LOW);
-      lcd.print("Drunk", 11, 1);
+      digitalWrite(greenLedPin, HIGH);
+      lcd.print("Drunk", 2, 1);
+      lcd.print(String(mgLValue) + "mg/L", 9, 1);
       lcd.print("Driving", 5, 2);
       lcd.print("is prohibited",3, 3);
     }

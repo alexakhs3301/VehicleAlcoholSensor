@@ -4,15 +4,17 @@
              x:Class="VehicleAlcoholSensor.Mobile.App.Views.Report"
              Title="Report">
     <VerticalStackLayout>
+        <ScrollView HeightRequest="600">
             <ListView x:Name="ReportListView">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell
-                            Text="{Binding Concentration, StringFormat='Concentration: {0}'}"
+                            Text="{Binding MgL, StringFormat='Mg/L: {0:N2}'}"
                             Detail="{Binding EventTimestamp, StringFormat='Date: {0}'}"
                             />
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+        </ScrollView>
     </VerticalStackLayout>
 </ContentPage>

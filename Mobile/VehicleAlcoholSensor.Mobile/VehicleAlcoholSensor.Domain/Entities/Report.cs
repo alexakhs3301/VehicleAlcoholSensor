@@ -12,5 +12,6 @@ namespace VehicleAlcoholSensor.Domain.Entities
         public int Concentration { get; set; }
         [JsonProperty("event_timestamp")]
         public DateTime EventTimestamp { get; set; }
+        public float MgL { get; set; }
     }
 }

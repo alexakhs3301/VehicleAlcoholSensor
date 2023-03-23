@@ -7,7 +7,7 @@
             services.AddHttpClient("AlcoholSensor", @as =>
             {
                 @as.Timeout = TimeSpan.FromSeconds(5);
-                @as.BaseAddress = new Uri("http://192.168.1.8:8080");
+                @as.BaseAddress = new Uri("http://192.168.5.102:8080");
             });
 
             return services;
