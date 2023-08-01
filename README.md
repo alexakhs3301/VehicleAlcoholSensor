@@ -44,9 +44,9 @@ This project is designed to prevent drunk driving by using an ESP8266 microcontr
 
 ## **Maintenance**
 
-#### Regularly check and replace the MQ3 alcohol sensor as needed.
-#### Keep the Bluetooth module and mobile app up to date.
-#### Periodically check the API and database for errors and ensure that data is being properly stored and retrieved.
+#### 1. Regularly check and replace the MQ3 alcohol sensor as needed.
+#### 2. Keep the Bluetooth module and mobile app up to date.
+#### 3. Periodically check the API and database for errors and ensure that data is being properly stored and retrieved.
 
 
 
@@ -68,14 +68,14 @@ This project is designed to prevent drunk driving by using an ESP8266 microcontr
 
 ### To use the Alcohol Detection and Engine Control System, follow these steps:
 
-#### Set up the circuit as described above.
-#### Install and run the mobile app on your device.
-#### Pair your device with the Bluetooth module.
-#### Start the API on a server.
-#### Before starting the vehicle, blow into the alcohol sensor.
-#### The alcohol concentration will be displayed on the LCD screen and on the mobile app.
-#### If the concentration is below the predetermined limit, the vehicle's engine will start as usual.
-#### If the concentration is above the limit, the vehicle's engine will not start and a warning message will be displayed on the LCD screen and mobile app.
+#### - Set up the circuit as described above.
+#### - Install and run the mobile app on your device.
+#### - Pair your device with the Bluetooth module.
+#### - Start the API on a server.
+#### - Before starting the vehicle, blow into the alcohol sensor.
+#### - The alcohol concentration will be displayed on the LCD screen and on the mobile app.
+#### - If the concentration is below the predetermined limit, the vehicle's engine will start as usual.
+#### - If the concentration is above the limit, the vehicle's engine will not start and a warning message will be displayed on the LCD screen and mobile app.
 
 
 
