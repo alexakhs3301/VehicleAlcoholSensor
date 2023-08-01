@@ -1,6 +1,6 @@
 # **Vehicle Alcohol Sensor Project**
 
-This project is designed to prevent drunk driving by using an ESP8266 microcontroller, MQ3 alcohol sensor, and Bluetooth module to detect the concentration of alcohol in the user's breath. The results are displayed on an LCD screen on the breadboard, as well as on a mobile app made with Xamarin.
+This project is designed to prevent drunk driving by using an ESP8266 microcontroller(or ARDUINO UNO), MQ3 alcohol sensor, and Bluetooth module to detect the concentration of alcohol in the user's breath. The results are displayed on an LCD screen on the breadboard, as well as on a mobile app made with Xamarin.
 
 
 ## **Hardware Components**
